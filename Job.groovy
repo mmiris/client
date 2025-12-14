@@ -11,6 +11,12 @@ node('static_scheduler') {
         git branch: 'dev', url: 'https://github.com/mmiris/client.git'
     }
 
+    stage('Debug: List Files') {
+        // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
+        // 这行命令会递归列出所有文件，帮我们定位路径
+        sh 'ls -R' 
+    }
+
     stage('Bootstrap: Launch') {
         // 2. 加载通用流水线框架
         // load 返回的是 general_pipeline.groovy 里的对象 (因为我们写了 return this)
