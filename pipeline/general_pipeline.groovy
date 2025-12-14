@@ -27,7 +27,7 @@ def call(Map config) {
                 // 【核心修正点】
                 // load 会执行那个文件，并返回文件末尾的 'this' 对象
                 // 假设文件在当前 workspace 的 scripts 目录下
-                clientLib = load 'client/scripts/client.groovy'
+                clientLib = load 'scripts/client.groovy'
                 
                 echo "=== 3. 调用模块方法申请资源 ==="
                 // 直接传递 Map 参数，接收返回值

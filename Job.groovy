@@ -20,7 +20,7 @@ node('static_scheduler') {
     stage('Bootstrap: Launch') {
         // 2. 加载通用流水线框架
         // load 返回的是 general_pipeline.groovy 里的对象 (因为我们写了 return this)
-        def pipelineFramework = load 'client/pipelines/general_pipeline.groovy'
+        def pipelineFramework = load 'pipeline/general_pipeline.groovy'
         
         // 3. 传入配置，启动流水线
         // 这里是你唯一需要针对不同 Job 修改的地方
