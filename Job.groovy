@@ -8,13 +8,13 @@ node('static_scheduler') {
         
         // 1. 拉取包含 general_pipeline.groovy 和 client.groovy 的仓库
         // 【注意】请替换为你真实的 GitHub 地址
-        git branch: 'main', url: 'https://github.com/mmiris/client.git'
+        git branch: 'dev', url: 'https://github.com/mmiris/client.git'
     }
 
     stage('Bootstrap: Launch') {
         // 2. 加载通用流水线框架
         // load 返回的是 general_pipeline.groovy 里的对象 (因为我们写了 return this)
-        def pipelineFramework = load 'pipelines/general_pipeline.groovy'
+        def pipelineFramework = load 'client/pipelines/general_pipeline.groovy'
         
         // 3. 传入配置，启动流水线
         // 这里是你唯一需要针对不同 Job 修改的地方
