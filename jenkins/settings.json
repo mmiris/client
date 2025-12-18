@@ -1,0 +1,62 @@
+{
+    // --- 1. Python 智能辅助 (类型推断与 Pylance) ---
+    "python.analysis.typeCheckingMode": "basic",    // 开启基础类型检查，识别逻辑漏洞
+    "python.analysis.indexing": true,               // 开启索引，加速跳转与补全
+    "python.analysis.autoImportCompletions": true,  // 自动导入缺失的模块
+    "python.analysis.useLibraryCodeForTypes": true, // 强制从源码推断类型，减少 unknown
+    "python.analysis.diagnosticMode": "workspace",  // 全局诊断
+    
+    // 内联提示 (Inlay Hints): 在代码中静默显示 Pylance 推断出的变量类型
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.callArgumentNames": "partial",
+
+    // --- 2. 格式化与校验 (Ruff 核心) ---
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    
+    // 屏蔽 Pylance 与 Ruff 重复的警告，保持编辑器清爽
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportUnusedImport": "none",
+        "reportUnusedVariable": "none",
+        "reportUndefinedVariable": "warning"
+    },
+
+    // --- 3. 编辑器视觉与手感优化 (丝滑、对齐) ---
+    "editor.cursorSmoothCaretAnimation": "on",      // 光标平滑移动（非常推荐）
+    "editor.smoothScrolling": true,                 // 滚动平滑切换
+    "editor.cursorBlinking": "smooth",              // 光标呼吸效果
+    
+    "editor.guides.bracketPairs": "active",         // 括号对齐线，防止嵌套逻辑出错
+    "editor.bracketPairColorization.enabled": true, // 括号着色（即便默认主题也会有彩色区分）
+    "editor.guides.indentation": true,              // 显示缩进指南，对 Python 极其重要
+    "editor.renderWhitespace": "boundary",          // 仅在边界显示空格，避免 Python 缩进错误
+    "workbench.colorCustomizations": {
+        // 替换掉难看的黄色，改用更专业的冷色调
+        // "editorBracketHighlight.foreground1": "#569CD6", // 第一层：冷蓝色
+        // "editorBracketHighlight.foreground2": "#C586C0", // 第二层：柔紫色
+        // "editorBracketHighlight.foreground3": "#4EC9B0", // 第三层：青绿色
+        "editorBracketHighlight.unexpectedBracket.foreground": "#FF4500", // 错误括号：橘红色警告
+        
+        // 括号对齐引导线的颜色 (选中时的颜色)
+        "editorBracketPairGuide.activeBackground1": "#569CD6",
+        "editorBracketPairGuide.activeBackground2": "#C586C0",
+        "editorBracketPairGuide.activeBackground3": "#4EC9B0"
+    },
+    "http.systemCertificatesNode": true,
+    
+    // --- 4. 基础文件与 UI 设置 ---
+    "files.autoSave": "afterDelay",
+    "files.eol": "\n",                              // 强制使用 LF 换行符，防止脚本在容器中运行失败
+    "editor.minimap.enabled": false,                // 建议关闭小地图，增加可视代码空间
+    "editor.stickyScroll.enabled": true,            // 滚动时顶部吸附函数名/类名，方便定位
+    
+    // --- 5. 其他必要插件配置 ---
+    "redhat.telemetry.enabled": false
+}
