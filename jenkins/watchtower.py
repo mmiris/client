@@ -19,9 +19,9 @@ DEBUG_SHOW_ALL_NODES = False
 MASTERS_CONFIG = [
     {
         "name": "Scan-Master-01",
-        "url": "http://192.168.1.10:8080",
-        "user": "admin",
-        "token": "TOKEN_A",
+        "url": "",
+        "user": "",
+        "token": "",
     },
     # {
     #     "name": "Scan-Master-02",
@@ -40,7 +40,7 @@ def is_target_node(node_name):
     if DEBUG_SHOW_ALL_NODES:
         return True
     # 过滤白名单
-    target_keywords = ["static", "manager", "ops", "tier2", "linux", "build"]
+    target_keywords = ["static", "manager", "ops", "overseas", "linux", "build"]
     return any(keyword in node_name_lower for keyword in target_keywords)
 
 
@@ -150,7 +150,9 @@ def fetch_master_status(config):
         nodes_map = server.get_nodes()
         for name, node_obj in nodes_map.items():
             if is_target_node(name):
-                result["nodes"].append({"name": name, "metrics": get_detailed_metrics(node_obj)})
+                result["nodes"].append(
+                    {"name": name, "metrics": get_detailed_metrics(node_obj)}
+                )
         result["nodes"].sort(key=lambda x: x["name"])
     except Exception as e:
         result["error"] = f"Master Connect Failed: {e}"
@@ -205,7 +207,9 @@ def generate_layout():
         # Queue 信息
         if data["alive"]:
             q_color = (
-                "green" if data["queue"] < 10 else ("yellow" if data["queue"] < 50 else "bold red")
+                "green"
+                if data["queue"] < 10
+                else ("yellow" if data["queue"] < 50 else "bold red")
             )
             queue_info = f"[{q_color}]{data['queue']}[/]\n[dim]{data['latency']}ms[/]"
         else:
@@ -214,7 +218,11 @@ def generate_layout():
         # Nodes 详情
         if data["alive"] and data["nodes"]:
             node_table = Table(
-                box=None, show_header=True, padding=(0, 2), expand=True, header_style="dim"
+                box=None,
+                show_header=True,
+                padding=(0, 2),
+                expand=True,
+                header_style="dim",
             )
             node_table.add_column("Node Name", justify="center", style="white")
             node_table.add_column("State", justify="center")
@@ -229,7 +237,9 @@ def generate_layout():
                     # 将详细错误信息作为悬停或副文本（此处极简显示）
                     state = f"[red]✖[/red]\n[dim]{str(m['reason'])[:15]}[/dim]"
 
-                exec_color = "yellow" if (m["idle"] == 0 and m["total"] > 0) else "green"
+                exec_color = (
+                    "yellow" if (m["idle"] == 0 and m["total"] > 0) else "green"
+                )
 
                 node_table.add_row(
                     node["name"],
@@ -240,7 +250,11 @@ def generate_layout():
                 )
             nodes_render = node_table
         else:
-            msg = "No Nodes Found" if data["alive"] else (data.get("error") or "Master Down")
+            msg = (
+                "No Nodes Found"
+                if data["alive"]
+                else (data.get("error") or "Master Down")
+            )
             nodes_render = Text(msg, style="dim", justify="center")
 
         grid.add_row(master_info, queue_info, nodes_render)
