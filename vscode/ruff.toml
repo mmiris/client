@@ -1,0 +1,18 @@
+line-length = 88
+
+[format]
+quote-style = "double"
+indent-style = "space"
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP", "N"]
+ignore = ["E501"]
+
+# 标识符,来源工具 (Origin),核心功能说明
+# E,Pycodestyle (Error),检查违反 PEP 8 规范的硬性错误（如错误的空格、缩进问题）。
+# W,Pycodestyle (Warning),检查非致命的风格警告，通常是建议性质的格式调整。
+# F,Pyflakes,最关键的检查。它不看格式，只看逻辑。能发现：变量未定义、导入了但没使用的库、语法错误等。
+# I,isort,自动对 import 语句进行排序和归类（内置库、第三方库、本地库分块排序）。
+# B,flake8-bugbear,寻找可能导致 Bug 的设计模式，例如将易变对象（如列表）作为函数的默认参数。
+# UP,pyupgrade,自动将旧版本语法升级为现代 Python 语法（如将 .format() 升级为 f-strings）。
+# N,pep8-naming,强制执行命名规范。类名必须是大驼峰（PascalCase），函数和变量必须是蛇形命名（snake_case）。
