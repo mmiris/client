@@ -31,7 +31,7 @@
     "[shellscript]": {
         "editor.tabSize": 4,
         "editor.formatOnSave": true,
-        "editor.defaultFormatter": "foxundermoon.shell-format",
+        "editor.defaultFormatter": "foxundermoon.shell-format"
     },
 
     // --- 3. 编辑器视觉与手感优化 ---
