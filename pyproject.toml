@@ -1,0 +1,10 @@
+[project]
+name = "client"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "jenkinsapi>=0.3.17",
+    "rich>=14.2.0",
+]
