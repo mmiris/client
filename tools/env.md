@@ -93,5 +93,5 @@ trusted-host = pypi.tuna.tsinghua.edu.cn
 ```shell
 uv --version           # 检查 uv 是否可用
 uv python list         # 检查是否能看到 Python 版本列表（走镜像源）
-uv pip install requests # 检查安装速度（走 PyPI 镜像源）
+uv pip install requests # 检查安装速度（PyPI 镜像源）
 ```
