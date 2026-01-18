@@ -7,3 +7,5 @@ def call() {
         echo "Start compiler ..."
     }
 }
+
+return this
