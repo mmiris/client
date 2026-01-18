@@ -29,6 +29,10 @@ def call() {
                         //         echo "Upload to Samba finished."
                         //     '''
                         // }
+                        stage("compare") {
+                            git branch: 'dev', url: 'https://github.com/mmiris/client.git'
+                        }
+                        
                         stage('List Files') {
                             // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
                             // 这行命令会递归列出所有文件，帮我们定位路径
