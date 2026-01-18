@@ -14,33 +14,16 @@ def call() {
             "Container_A": {
                 node(container_a) { // Tier 2: 分配到海外静态节点
                     try {
-                        echo "Container A】开始工作..."
-                        // stage('A: Build & Upload') {
-                        //     sh '''
-                        //         echo "[Tier 3] 正在模拟下载代码..."
-                        //         sleep 5
-                        //         echo "[Tier 3] 正在编译二进制文件 A..."
-                        //         sleep 10
-                        //         echo "Build Complete." > artifact_A.bin
-
-                        //         echo "[Tier 3] 正在上传 artifact_A.bin 到 Samba..."
-                        //         # 模拟上传动作
-                        //         sleep 3
-                        //         echo "Upload to Samba finished."
-                        //     '''
-                        // }
+                        echo "【Container A】开始工作..."
                         stage("compare") {
                             git branch: 'dev', url: 'https://github.com/mmiris/client.git'
                         }
 
-                        stage('List Files') {
-                            // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
-                            // 这行命令会递归列出所有文件，帮我们定位路径
-                            def current_dir = pwd()
-                            echo "Current workspace: $current_dir"
-                            echo "env.WORKSPACE: $env.WORKSPACE"
-                            sh 'ls -R'
-                        }
+                        // stage('List Files') {
+                        //     // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
+                        //     // 这行命令会递归列出所有文件，帮我们定位路径
+                        //     sh 'ls -R'
+                        // }
 
                         stage("Launch") {
                             def pipeline_container_a = load "pipeline/build/build_container_a.groovy"
