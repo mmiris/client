@@ -1,4 +1,5 @@
 def download_build_tool() {
+    echo "Current Workspace: $env.WORKSPACE"
     deleteDir()
     sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
 }
