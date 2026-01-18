@@ -7,7 +7,7 @@ def call() {
 
         // 存储到环境变量中
         env.setProperty("container_a", container_a)
-        evn.setProperty("container_b", container_b)
+        env.setProperty("container_b", container_b)
 
         // 使用 parallel 实现并行执行
         parallel(
