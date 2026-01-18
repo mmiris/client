@@ -1,24 +1,38 @@
 def call() {
     stage('Binary Comparison Simulation') {
+        // A 容器名称
+        def container_a = "static_scheduler_overseas"
+        // B 机器名称
+        def container_b = "static_scheduler"
+
+        // 存储到环境变量中
+        env.setProperty("container_a", container_a)
+        evn.setProperty("container_b", container_b)
+
         // 使用 parallel 实现并行执行
         parallel(
             "Container_A": {
-                node('static_scheduler_overseas') { // Tier 2: 分配到海外静态节点
+                node(container_a) { // Tier 2: 分配到海外静态节点
                     try {
                         echo "Container A】开始工作..."
-                        stage('A: Build & Upload') {
-                            sh '''
-                                echo "[Tier 3] 正在模拟下载代码..."
-                                sleep 5
-                                echo "[Tier 3] 正在编译二进制文件 A..."
-                                sleep 10
-                                echo "Build Complete." > artifact_A.bin
+                        // stage('A: Build & Upload') {
+                        //     sh '''
+                        //         echo "[Tier 3] 正在模拟下载代码..."
+                        //         sleep 5
+                        //         echo "[Tier 3] 正在编译二进制文件 A..."
+                        //         sleep 10
+                        //         echo "Build Complete." > artifact_A.bin
 
-                                echo "[Tier 3] 正在上传 artifact_A.bin 到 Samba..."
-                                # 模拟上传动作
-                                sleep 3
-                                echo "Upload to Samba finished."
-                            '''
+                        //         echo "[Tier 3] 正在上传 artifact_A.bin 到 Samba..."
+                        //         # 模拟上传动作
+                        //         sleep 3
+                        //         echo "Upload to Samba finished."
+                        //     '''
+                        // }
+                        stage('List Files') {
+                            // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
+                            // 这行命令会递归列出所有文件，帮我们定位路径
+                            sh 'ls -R'
                         }
                     } finally {
                         // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
@@ -29,7 +43,7 @@ def call() {
             },
 
             "Container_B": {
-                node('static_scheduler') { // Tier 2: 分配到本地静态节点
+                node(container_b) { // Tier 2: 分配到本地静态节点
                     try {
                         echo "Container B】开始工作..."
                         stage('B: Build & Compare') {
