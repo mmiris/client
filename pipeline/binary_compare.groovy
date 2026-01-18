@@ -43,7 +43,7 @@ def call() {
                         }
 
                         stage("Launch") {
-                            def pipeline_container_a = load "pipeline/build/build_container_a.grrovy"
+                            def pipeline_container_a = load "pipeline/build/build_container_a.groovy"
                             pipeline_container_a.call()
                         }
                     } finally {
@@ -59,26 +59,29 @@ def call() {
                     try {
                         echo "Container B】开始工作..."
                         stage('B: Build & Compare') {
-                            sh '''
-                                echo "[Tier 3] 正在模拟下载代码..."
-                                sleep 5
-                                echo "[Tier 3] 正在编译二进制文件 B..."
-                                sleep 8
-                                echo "Build Complete." > artifact_B.bin
+                            // sh '''
+                            //     echo "[Tier 3] 正在模拟下载代码..."
+                            //     sleep 5
+                            //     echo "[Tier 3] 正在编译二进制文件 B..."
+                            //     sleep 8
+                            //     echo "Build Complete." > artifact_B.bin
 
-                                echo "[Tier 3] 等待 Container A 上传产物..."
-                                # 在真实场景中，这里可以用 Python 脚本通过 smbclient 轮询检查文件是否存在
-                                sleep 15
+                            //     echo "[Tier 3] 等待 Container A 上传产物..."
+                            //     # 在真实场景中，这里可以用 Python 脚本通过 smbclient 轮询检查文件是否存在
+                            //     sleep 15
 
-                                echo "[Tier 3] 从 Samba 下载 Container A 的产物..."
-                                echo "Artifact_A_Content" > artifact_A_remote.bin
+                            //     echo "[Tier 3] 从 Samba 下载 Container A 的产物..."
+                            //     echo "Artifact_A_Content" > artifact_A_remote.bin
 
-                                echo "[Tier 3] 运行二进制对比平台上传脚本..."
-                                # 模拟 Python 脚本逻辑：python3 compare.py artifact_A_remote.bin artifact_B.bin
-                                echo "Comparing A and B..."
-                                sleep 5
+                            //     echo "[Tier 3] 运行二进制对比平台上传脚本..."
+                            //     # 模拟 Python 脚本逻辑：python3 compare.py artifact_A_remote.bin artifact_B.bin
+                            //     echo "Comparing A and B..."
+                            //     sleep 5
+                            //     echo "Comparison Result: 100% Match!"
+                            // '''
+                            sh """
                                 echo "Comparison Result: 100% Match!"
-                            '''
+                            """
                         }
                     } finally {
                         echo "【Container B】执行 finally 清理..."
