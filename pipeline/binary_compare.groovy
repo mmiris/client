@@ -1,0 +1,67 @@
+def call() {
+    stage('Binary Comparison Simulation') {
+        // 使用 parallel 实现并行执行
+        parallel(
+            "Container_A": {
+                node('static_scheduler_overseas') { // Tier 2: 分配到海外静态节点
+                    try {
+                        echo "Container A】开始工作..."
+                        stage('A: Build & Upload') {
+                            sh '''
+                                echo "[Tier 3] 正在模拟下载代码..."
+                                sleep 5
+                                echo "[Tier 3] 正在编译二进制文件 A..."
+                                sleep 10
+                                echo "Build Complete." > artifact_A.bin
+
+                                echo "[Tier 3] 正在上传 artifact_A.bin 到 Samba..."
+                                # 模拟上传动作
+                                sleep 3
+                                echo "Upload to Samba finished."
+                            '''
+                        }
+                    } finally {
+                        // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
+                        echo "【Container A】执行 finally 清理..."
+                    // deleteDir()
+                    }
+                }
+            },
+
+            "Container_B": {
+                node('static_scheduler') { // Tier 2: 分配到本地静态节点
+                    try {
+                        echo "Container B】开始工作..."
+                        stage('B: Build & Compare') {
+                            sh '''
+                                echo "[Tier 3] 正在模拟下载代码..."
+                                sleep 5
+                                echo "[Tier 3] 正在编译二进制文件 B..."
+                                sleep 8
+                                echo "Build Complete." > artifact_B.bin
+
+                                echo "[Tier 3] 等待 Container A 上传产物..."
+                                # 在真实场景中，这里可以用 Python 脚本通过 smbclient 轮询检查文件是否存在
+                                sleep 15
+
+                                echo "[Tier 3] 从 Samba 下载 Container A 的产物..."
+                                echo "Artifact_A_Content" > artifact_A_remote.bin
+
+                                echo "[Tier 3] 运行二进制对比平台上传脚本..."
+                                # 模拟 Python 脚本逻辑：python3 compare.py artifact_A_remote.bin artifact_B.bin
+                                echo "Comparing A and B..."
+                                sleep 5
+                                echo "Comparison Result: 100% Match!"
+                            '''
+                        }
+                    } finally {
+                        echo "【Container B】执行 finally 清理..."
+                    // deleteDir()
+                    }
+                }
+            }
+        )
+    }
+}
+
+return this
