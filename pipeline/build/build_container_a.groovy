@@ -9,7 +9,7 @@ def call() {
 
     stage("compiler") {
         echo "Start compiler ..."
-        sh "python3 $ci_tool_path/binaery_comare.py"
+        sh "python3 $ci_tool_path/binary_compare.py"
     }
 }
 
