@@ -2,7 +2,7 @@ def call() {
     stage('Binary Comparison Simulation') {
         // A 容器名称
         def container_a = "static_scheduler_overseas"
-        // B 机器名称
+        // B 容器名称
         def container_b = "static_scheduler"
 
         // 存储到环境变量中
@@ -11,7 +11,7 @@ def call() {
 
         // 使用 parallel 实现并行执行
         parallel(["Container_A": {
-                node(container_a) { // Tier 2: 分配到海外静态节点
+                node(container_a) {
                     try {
                         echo "【Container A】开始工作..."
                         stage("compare") {
@@ -25,13 +25,13 @@ def call() {
                         // }
 
                         stage("Launch") {
-                            def pipeline_container_a = load "pipeline/build/build_container_a.groovy"
+                            def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
                             pipeline_container_a.call()
                         }
                     } finally {
                         // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
-                        echo "【Container A】执行 finally 清理..."
-                    // deleteDir()
+                        echo "【Container A】执行工作目录清理..."
+                        // deleteDir()
                     }
                 }
             },
@@ -67,7 +67,7 @@ def call() {
                         }
                     } finally {
                         echo "【Container B】执行 finally 清理..."
-                    // deleteDir()
+                        // deleteDir()
                     }
                 }
             }

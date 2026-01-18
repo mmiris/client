@@ -5,7 +5,7 @@
     "python.analysis.autoImportCompletions": true,  // 自动导入缺失的模块
     "python.analysis.useLibraryCodeForTypes": true, // 强制从源码推断类型，减少 unknown
     // "python.analysis.diagnosticMode": "workspace",  // 全局诊断
-    
+
     // 内联提示 (Inlay Hints): 在代码中静默显示 Pylance 推断出的变量类型
     "python.analysis.inlayHints.variableTypes": true,
     "python.analysis.inlayHints.functionReturnTypes": true,
@@ -20,7 +20,9 @@
         },
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
-    
+
+    "ruff.lineLength": 88,
+
     // 屏蔽 Pylance 与 Ruff 重复的警告
     "python.analysis.diagnosticSeverityOverrides": {
         "reportUnusedImport": "none",
@@ -48,20 +50,20 @@
         // "editorBracketHighlight.foreground2": "#C586C0", // 第二层：柔紫色
         // "editorBracketHighlight.foreground3": "#4EC9B0", // 第三层：青绿色
         "editorBracketHighlight.unexpectedBracket.foreground": "#FF4500", // 错误括号：橘红色警告
-        
+
         // 括号对齐引导线的颜色 (选中时的颜色)
         "editorBracketPairGuide.activeBackground1": "#569CD6",
         "editorBracketPairGuide.activeBackground2": "#C586C0",
         "editorBracketPairGuide.activeBackground3": "#4EC9B0"
     },
     "http.systemCertificatesNode": true,
-    
+
     // --- 4. 基础文件与 UI 设置 ---
     "files.autoSave": "afterDelay",
     "files.eol": "\n",                              // 强制使用 LF 换行符，防止脚本在容器中运行失败
     "editor.minimap.enabled": false,                // 建议关闭小地图，增加可视代码空间
     "editor.stickyScroll.enabled": true,            // 滚动时顶部吸附函数名/类名，方便定位
-    
+
     // --- 5. 其他必要插件配置 ---
     "redhat.telemetry.enabled": false
 }
