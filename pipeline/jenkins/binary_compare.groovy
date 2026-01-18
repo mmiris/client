@@ -15,7 +15,11 @@ def call() {
                     try {
                         echo "【Container A】开始工作..."
                         stage("compare") {
-                            git branch: 'dev', url: 'https://github.com/mmiris/client.git'
+                            sh(script: "ls -R")
+                            deleteDir()
+                            sh(script: "ls -R")
+                            sh(scipt: "git clone -q -b dev https://github.com/mmiris/client.git .")
+                            sh(script: "ls -R")
                         }
 
                         // stage('List Files') {
