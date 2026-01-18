@@ -18,8 +18,8 @@ def call() {
                             sh(script: "ls -R")
                             deleteDir()
                             sh(script: "ls -R")
-                            sh(scipt: "git clone -q -b dev https://github.com/mmiris/client.git .")
-                            sh(script: "ls -R")
+                            sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
+                            sh(script: "echo 'after delete dir:'; ls -R")
                         }
 
                         // stage('List Files') {
