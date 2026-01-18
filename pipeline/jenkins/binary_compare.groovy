@@ -1,3 +1,8 @@
+def download_build_tool() {
+    deleteDir()
+    sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
+}
+
 def call() {
     stage('Binary Comparison Simulation') {
         // A 容器名称
@@ -10,16 +15,13 @@ def call() {
         env.setProperty("container_b", container_b)
 
         // 使用 parallel 实现并行执行
-        parallel(["Container_A": {
+        parallel(
+            "Container_A": {
                 node(container_a) {
                     try {
                         echo "【Container A】开始工作..."
-                        stage("compare") {
-                            sh(script: "ls -R")
-                            deleteDir()
-                            sh(script: "ls -R")
-                            sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
-                            sh(script: "echo 'after delete dir:'; ls -R")
+                        stage("【A】Prepare") {
+                            this.download_build_tool()
                         }
 
                         // stage('List Files') {
@@ -28,7 +30,7 @@ def call() {
                         //     sh 'ls -R'
                         // }
 
-                        stage("Launch") {
+                        stage("【A】Launch") {
                             def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
                             pipeline_container_a.call()
                         }
@@ -43,8 +45,9 @@ def call() {
             "Container_B": {
                 node(container_b) { // Tier 2: 分配到本地静态节点
                     try {
-                        echo "Container B】开始工作..."
-                        stage('B: Build & Compare') {
+                        echo "【Container B】开始工作..."
+                        stage("【B】Prepare") {
+                            this.download_build_tool()
                             // sh '''
                             //     echo "[Tier 3] 正在模拟下载代码..."
                             //     sleep 5
@@ -75,7 +78,6 @@ def call() {
                     }
                 }
             }
-        ]
         )
     }
 }
