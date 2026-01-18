@@ -10,8 +10,7 @@ def call() {
         env.setProperty("container_b", container_b)
 
         // 使用 parallel 实现并行执行
-        parallel(
-            "Container_A": {
+        parallel(["Container_A": {
                 node(container_a) { // Tier 2: 分配到海外静态节点
                     try {
                         echo "【Container A】开始工作..."
@@ -72,6 +71,7 @@ def call() {
                     }
                 }
             }
+        ]
         )
     }
 }
