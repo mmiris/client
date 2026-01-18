@@ -32,11 +32,19 @@ def call() {
                         stage("compare") {
                             git branch: 'dev', url: 'https://github.com/mmiris/client.git'
                         }
-                        
+
                         stage('List Files') {
                             // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
                             // 这行命令会递归列出所有文件，帮我们定位路径
+                            current_dir = pwd()
+                            echo "Current workspace: $current_dir"
+                            echo "env.WORKSPACE: $env.WORKSPACE"
                             sh 'ls -R'
+                        }
+
+                        stage("Launch") {
+                            def pipeline_container_a = load "pipeline/build/build/build_container_a.grrovy"
+                            pipeline_container_a.call()
                         }
                     } finally {
                         // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
