@@ -11,14 +11,16 @@ def call() {
         // B 容器名称
         def container_b = "static_scheduler"
 
-        // 存储到环境变量中
-        env.setProperty("container_a", container_a)
-        env.setProperty("container_b", container_b)
+        // // 存储到环境变量中
+        // env.setProperty("container_a", container_a)
+        // env.setProperty("container_b", container_b)
 
         // 使用 parallel 实现并行执行
         parallel(
             "Container_A": {
-                node(container_a) {
+                env.run_node_name = container_a
+                echo "Container_A run_node_name ==> $run_node_name"
+                node(run_node_name) {
                     try {
                         echo "【Container A】开始工作..."
                         stage("【A】Prepare") {
@@ -44,7 +46,9 @@ def call() {
             },
 
             "Container_B": {
-                node(container_b) { // Tier 2: 分配到本地静态节点
+                env.run_node_name = container_b
+                echo "Container_A run_node_name ==> $run_node_name"
+                node(run_node_name) { // Tier 2: 分配到本地静态节点
                     try {
                         echo "【Container B】开始工作..."
                         stage("【B】Prepare") {
