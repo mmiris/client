@@ -1,8 +1,5 @@
 def download_build_tool() {
-    sh(script: "ls -al")
-    deleteDir()
-    sh(script: "ls -al")
-    sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
+    println "do nothing ..."
 }
 
 def call() {
@@ -41,9 +38,7 @@ def call() {
                         }
                     }
                 } finally {
-                    // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
                     echo "【Container A】执行工作目录清理..."
-                    deleteDir()
                 }
             },
 
@@ -69,9 +64,7 @@ def call() {
                         }
                     }
                 } finally {
-                    // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
                     echo "【Container B】执行工作目录清理..."
-                    deleteDir()
                 }
             }
         )
