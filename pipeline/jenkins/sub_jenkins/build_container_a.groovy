@@ -1,5 +1,6 @@
 def call() {
     echo "【Container A】当前沙箱内的节点名: ${env.run_node_name}"
+    echo "【Container A】当前沙箱内的工作空间: ${env.WORKSPACE}"
     def ci_tool_path = pwd() + "/pipeline/ci_tool"
     node(env.run_node_name) {
         try {
@@ -12,7 +13,7 @@ def call() {
                 sh "python3 $ci_tool_path/binary_compare.py"
             }
         } finally {
-            deleteDir()
+            // deleteDir()
         }
     }
 }
