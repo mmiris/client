@@ -32,7 +32,7 @@ def call() {
                     // }
 
                     stage("【A】Launch") {
-                        withEnv([run_node_name: container_a]) {
+                        withEnv(["run_node_name=$container_a"]) {
                             def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
                             pipeline_container_a.call()
                         }
