@@ -1,7 +1,7 @@
 def download_build_tool() {
     sh(script: "ls -al")
     deleteDir()
-    sh(script: "rm -rf ./*; ls -al")
+    sh(script: "ls -al")
     sh(script: "git clone -q -b dev https://github.com/mmiris/client.git .")
 }
 
