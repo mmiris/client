@@ -9,6 +9,8 @@ def call() {
                 sh "git clone -q -b dev https://github.com/mmiris/client.git ."
             }
             stage("【B】Business Logic") {
+                sh "ls -lR"
+                sh "pwd"
                 // 执行 Tier 3 Python 逻辑
                 sh "python3 $ci_tool_path/binary_compare.py"
             }
