@@ -19,8 +19,8 @@ def call() {
         parallel(
             "Container_A": {
                 env.test_var_a = "test_var_a"
-                env.run_node_name = container_a
-                echo "Container_A run_node_name ==> $run_node_name"
+                // env.run_node_name = container_a
+                // echo "Container_A run_node_name ==> $run_node_name"
                 try {
                     echo "【Container A】开始工作..."
                     stage("【A】Prepare") {
@@ -42,13 +42,13 @@ def call() {
                 } finally {
                     // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
                     echo "【Container A】执行工作目录清理..."
-                    // deleteDir()
+                    deleteDir()
                 }
             },
 
             "Container_B": {
-                env.run_node_name = container_b
-                echo "Container_B run_node_name ==> $run_node_name"
+                // env.run_node_name = container_b
+                // echo "Container_B run_node_name ==> $run_node_name"
                 try {
                     echo "【Container B】开始工作..."
                     stage("【B】Prepare") {
@@ -70,7 +70,7 @@ def call() {
                 } finally {
                     // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
                     echo "【Container B】执行工作目录清理..."
-                    // deleteDir()
+                    deleteDir()
                 }
             }
         )
