@@ -34,8 +34,10 @@ def call() {
                     // }
 
                     stage("【A】Launch") {
-                        def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
-                        pipeline_container_a.call()
+                        withEnv(["run_node_name=$container_a"]) {
+                            def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
+                            pipeline_container_a.call()
+                        }
                     }
                 } finally {
                     // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
@@ -60,8 +62,10 @@ def call() {
                     // }
 
                     stage("【B】Launch") {
-                        def pipeline_container_b = load "pipeline/jenkins/sub_jenkins/build_container_b.groovy"
-                        pipeline_container_b.call()
+                        withEnv(["run_node_name=$container_b"]) {
+                            def pipeline_container_b = load "pipeline/jenkins/sub_jenkins/build_container_b.groovy"
+                            pipeline_container_b.call()
+                        }
                     }
                 } finally {
                     // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
