@@ -18,6 +18,7 @@ def call() {
         // 使用 parallel 实现并行执行
         parallel(
             "Container_A": {
+                env.test_var_a = "test_var_a"
                 env.run_node_name = container_a
                 echo "Container_A run_node_name ==> $run_node_name"
                 node(run_node_name) {
@@ -47,10 +48,11 @@ def call() {
 
             "Container_B": {
                 env.run_node_name = container_b
-                echo "Container_A run_node_name ==> $run_node_name"
+                echo "Container_B run_node_name ==> $run_node_name"
                 node(run_node_name) { // Tier 2: 分配到本地静态节点
                     try {
                         echo "【Container B】开始工作..."
+                        echo "Container_B test_var_a ==> $test_var_a"
                         stage("【B】Prepare") {
                             this.download_build_tool()
                             // sh '''
