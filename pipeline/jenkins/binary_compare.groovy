@@ -21,68 +21,52 @@ def call() {
                 env.test_var_a = "test_var_a"
                 env.run_node_name = container_a
                 echo "Container_A run_node_name ==> $run_node_name"
-                node(run_node_name) {
-                    try {
-                        echo "【Container A】开始工作..."
-                        stage("【A】Prepare") {
-                            this.download_build_tool()
-                        }
-
-                        // stage('List Files') {
-                        //     // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
-                        //     // 这行命令会递归列出所有文件，帮我们定位路径
-                        //     sh 'ls -R'
-                        // }
-
-                        stage("【A】Launch") {
-                            def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
-                            pipeline_container_a.call()
-                        }
-                    } finally {
-                        // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
-                        echo "【Container A】执行工作目录清理..."
-                        // deleteDir()
+                try {
+                    echo "【Container A】开始工作..."
+                    stage("【A】Prepare") {
+                        this.download_build_tool()
                     }
+
+                    // stage('List Files') {
+                    //     // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
+                    //     // 这行命令会递归列出所有文件，帮我们定位路径
+                    //     sh 'ls -R'
+                    // }
+
+                    stage("【A】Launch") {
+                        def pipeline_container_a = load "pipeline/jenkins/sub_jenkins/build_container_a.groovy"
+                        pipeline_container_a.call()
+                    }
+                } finally {
+                    // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
+                    echo "【Container A】执行工作目录清理..."
+                    // deleteDir()
                 }
             },
 
             "Container_B": {
                 env.run_node_name = container_b
                 echo "Container_B run_node_name ==> $run_node_name"
-                node(run_node_name) { // Tier 2: 分配到本地静态节点
-                    try {
-                        echo "【Container B】开始工作..."
-                        echo "Container_B test_var_a ==> $test_var_a"
-                        stage("【B】Prepare") {
-                            this.download_build_tool()
-                            // sh '''
-                            //     echo "[Tier 3] 正在模拟下载代码..."
-                            //     sleep 5
-                            //     echo "[Tier 3] 正在编译二进制文件 B..."
-                            //     sleep 8
-                            //     echo "Build Complete." > artifact_B.bin
-
-                            //     echo "[Tier 3] 等待 Container A 上传产物..."
-                            //     # 在真实场景中，这里可以用 Python 脚本通过 smbclient 轮询检查文件是否存在
-                            //     sleep 15
-
-                            //     echo "[Tier 3] 从 Samba 下载 Container A 的产物..."
-                            //     echo "Artifact_A_Content" > artifact_A_remote.bin
-
-                            //     echo "[Tier 3] 运行二进制对比平台上传脚本..."
-                            //     # 模拟 Python 脚本逻辑：python3 compare.py artifact_A_remote.bin artifact_B.bin
-                            //     echo "Comparing A and B..."
-                            //     sleep 5
-                            //     echo "Comparison Result: 100% Match!"
-                            // '''
-                            sh """
-                                echo "Comparison Result: 100% Match!"
-                            """
-                        }
-                    } finally {
-                        echo "【Container B】执行 finally 清理..."
-                        // deleteDir()
+                try {
+                    echo "【Container B】开始工作..."
+                    stage("【B】Prepare") {
+                        this.download_build_tool()
                     }
+
+                    // stage('List Files') {
+                    //     // === 新增调试步骤：让 Jenkins 打印当前目录下的所有文件 ===
+                    //     // 这行命令会递归列出所有文件，帮我们定位路径
+                    //     sh 'ls -R'
+                    // }
+
+                    stage("【B】Launch") {
+                        def pipeline_container_b = load "pipeline/jenkins/sub_jenkins/build_container_b.groovy"
+                        pipeline_container_b.call()
+                    }
+                } finally {
+                    // Tier 2 的必备动作：资源清理（此处模拟清理工作目录）
+                    echo "【Container B】执行工作目录清理..."
+                    // deleteDir()
                 }
             }
         )
