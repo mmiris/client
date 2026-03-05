@@ -9,7 +9,7 @@
     // 内联提示 (Inlay Hints): 在代码中静默显示 Pylance 推断出的变量类型
     "python.analysis.inlayHints.variableTypes": true,
     "python.analysis.inlayHints.functionReturnTypes": true,
-    "python.analysis.inlayHints.callArgumentNames": "partial",
+    "python.analysis.inlayHints.callArgumentNames": "partial", // "all"
 
     // --- 2. 格式化与校验  ---
     "[python]": {
